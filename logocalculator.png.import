@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/logocalculator.png-e73c698df328c6b88591db58676b7f48.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://logocalculator.png"
+dest_files=[ "res://.import/logocalculator.png-e73c698df328c6b88591db58676b7f48.stex" ]
 
 [params]
 
