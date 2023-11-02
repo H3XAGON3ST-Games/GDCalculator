@@ -100,6 +100,7 @@ func check_multiplier_next_to_bracket():
 	var fix_expression = cur_expressions
 	
 	for i in range(0, 10):
+		fix_expression = fix_expression.replace(")(", ")*(")
 		fix_expression = fix_expression.replace(str(i)+"(", str(i)+"*(")
 		fix_expression = fix_expression.replace(")" + str(i), ")*" + str(i))
 	
