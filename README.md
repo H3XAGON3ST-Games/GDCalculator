@@ -1,6 +1,6 @@
 # GDCalculator
 
-![logocalculator](https://github.com/H3XAGON3ST-Games/GDCalculator/assets/83023800/415ea04b-9932-4840-8d17-8515aba61fc7)
+![logocalculator](https://github.com/H3XAGON3ST-Games/GDCalculator/assets/83023800/ca96db86-176b-48c3-8e84-dfdac3e5141c)
 
 ## Open Sourse Calculator on Godot 3.5 for Windows, Linux, Android
 
