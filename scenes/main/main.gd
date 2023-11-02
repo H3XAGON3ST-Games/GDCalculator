@@ -1,6 +1,6 @@
 extends Control
 
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
 const actions_with_bracket = ["+", "-", "*", "/", "(", ")"]
 const actions = ["+", "-", "*", "/"]
 
@@ -43,6 +43,10 @@ func split_via_array(string: String, array: Array) -> Array:
 func set_float_to_number():
 	var number_of_added_chars: int = 0
 	
+	var is_action_first = false
+	if cur_expressions[0] in actions_with_bracket:
+		is_action_first = true
+	
 	var array_number = split_via_array(cur_expressions, actions_with_bracket)
 	var array_action = split_via_array(cur_expressions, numbers)
 	
@@ -58,9 +62,15 @@ func set_float_to_number():
 	
 	for i in range(0, array_number.size() - even_num_fix): 
 		if array_number[i].split(".").size() <= 1:
-			fix_expression += array_number[i] + ".0" + array_action[i]
+			if is_action_first:
+				fix_expression += array_action[i] + array_number[i] + ".0"
+			else:
+				fix_expression += array_number[i] + ".0" + array_action[i]
 		else:
-			fix_expression += array_number[i] + array_action[i]
+			if is_action_first:
+				fix_expression += array_action[i] + array_number[i]
+			else:
+				fix_expression += array_number[i] + array_action[i]
 	
 	prints(even_num_fix, !bool(even_num_fix))
 	
@@ -88,8 +98,6 @@ func clear_equals_in_cur_calculation():
 
 func check_multiplier_next_to_bracket():
 	var fix_expression = cur_expressions
-	
-#	if fix_expression.count("*")
 	
 	for i in range(0, 10):
 		fix_expression = fix_expression.replace(str(i)+"(", str(i)+"*(")
