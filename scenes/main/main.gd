@@ -1,8 +1,8 @@
 extends Control
 
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+const actions_with_bracket = ["+", "-", "*", "/", "(", ")"]
 const actions = ["+", "-", "*", "/"]
-
 
 var cur_expressions: String = ""
 
@@ -34,31 +34,48 @@ func split_via_array(string: String, array: Array) -> Array:
 		result_local_array.clear()
 		result_local_array.append_array(local)
 	
+	result_local_array.erase(null)
+	result_local_array.erase("")
+	
 	return result_local_array
 
 
 func set_float_to_number():
 	var number_of_added_chars: int = 0
 	
-	var array_number = split_via_array(cur_expressions, actions)
+	var array_number = split_via_array(cur_expressions, actions_with_bracket)
 	var array_action = split_via_array(cur_expressions, numbers)
 	
 	if array_number.size() <= 1:
 		return
 	
 	var fix_expression = ""
-	for i in range(0, array_number.size() - 1): 
+	
+	var even_num_fix = 1
+	if array_number.size() == array_action.size():
+		even_num_fix = 0
+	
+	
+	for i in range(0, array_number.size() - even_num_fix): 
 		if array_number[i].split(".").size() <= 1:
 			fix_expression += array_number[i] + ".0" + array_action[i]
 		else:
 			fix_expression += array_number[i] + array_action[i]
 	
-	var last_index = array_number.size()-1
+	prints(even_num_fix, !bool(even_num_fix))
 	
-	if array_number[last_index].split(".").size() <= 1:
-			fix_expression += array_number[last_index] + ".0"
-	else:
-			fix_expression += array_number[last_index]
+	if bool(even_num_fix):
+		var last_index = array_number.size()-1
+		
+		if array_number[last_index].split(".").size() <= 1:
+				fix_expression += array_number[last_index] + ".0"
+		else:
+				fix_expression += array_number[last_index]
+		
+		if array_number.size() < array_action.size():
+			fix_expression += array_action[array_action.size()-1]
+	
+	prints(array_number, array_action)
 	
 	set_cur_expression(fix_expression)
 
@@ -90,9 +107,10 @@ func check_action_char():
 func execute_expression():
 	clear_equals_in_cur_calculation()
 	if cur_expressions != "":
-		check_multiplier_next_to_bracket()
 		set_float_to_number()
+		check_multiplier_next_to_bracket()
 		var expression = Expression.new()
+		print(cur_expressions)
 		var error = expression.parse(cur_expressions)
 		
 		if error != OK:
