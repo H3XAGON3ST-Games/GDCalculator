@@ -41,8 +41,8 @@ corner_radius_bottom_left = 50
 [sub_resource type="StyleBoxEmpty" id=10]
 
 [sub_resource type="StyleBoxFlat" id=15]
-content_margin_left = 20.0
-content_margin_right = 20.0
+content_margin_left = 25.0
+content_margin_right = 25.0
 bg_color = Color( 0.827451, 0.721569, 1, 0.117647 )
 corner_radius_top_left = 50
 corner_radius_top_right = 50
@@ -106,8 +106,8 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxEmpty" id=16]
-content_margin_left = 10.0
-content_margin_right = 10.0
+content_margin_left = 25.0
+content_margin_right = 25.0
 
 [sub_resource type="DynamicFont" id=17]
 size = 80

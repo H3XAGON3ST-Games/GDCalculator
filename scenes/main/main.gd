@@ -34,8 +34,10 @@ func split_via_array(string: String, array: Array) -> Array:
 		result_local_array.clear()
 		result_local_array.append_array(local)
 	
-	result_local_array.erase(null)
-	result_local_array.erase("")
+	for i in result_local_array.size():
+		result_local_array.erase(null)
+		result_local_array.erase("")
+		result_local_array.erase(" ")
 	
 	return result_local_array
 
@@ -71,8 +73,6 @@ func set_float_to_number():
 				fix_expression += array_action[i] + array_number[i]
 			else:
 				fix_expression += array_number[i] + array_action[i]
-	
-	prints(even_num_fix, !bool(even_num_fix))
 	
 	if bool(even_num_fix):
 		var last_index = array_number.size()-1
