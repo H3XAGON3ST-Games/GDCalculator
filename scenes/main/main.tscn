@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://scenes/main/CurrentCalculation.gd" type="Script" id=1]
 [ext_resource path="res://global/fonts/nunito/static/Nunito-Medium.ttf" type="DynamicFontData" id=2]
@@ -14,6 +14,10 @@
 [ext_resource path="res://global/icons/icons8-down-arrow-48.png" type="Texture" id=12]
 [ext_resource path="res://scenes/converter/BmiBack.gd" type="Script" id=13]
 [ext_resource path="res://scenes/main/InputWindow.gd" type="Script" id=14]
+[ext_resource path="res://scenes/converter/AreaBack.gd" type="Script" id=15]
+[ext_resource path="res://scenes/converter/LengthBack.gd" type="Script" id=16]
+[ext_resource path="res://scenes/main/SpeedBack.gd" type="Script" id=17]
+[ext_resource path="res://scenes/converter/MassBack.gd" type="Script" id=18]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.878431, 0.372549, 0.372549, 0.290196 )
@@ -77,7 +81,7 @@ content_margin_left = 13.0
 content_margin_right = 13.0
 content_margin_top = 7.0
 content_margin_bottom = 7.0
-bg_color = Color( 0.552941, 0.490196, 0.6, 0.180392 )
+bg_color = Color( 0.552941, 0.490196, 0.6, 0.219608 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -101,6 +105,23 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
+[sub_resource type="DynamicFont" id=71]
+size = 46
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=77]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.164706, 0.145098, 0.176471, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [sub_resource type="DynamicFont" id=12]
 font_data = ExtResource( 2 )
 
@@ -123,6 +144,11 @@ OptionButton/styles/hover = SubResource( 75 )
 OptionButton/styles/normal = SubResource( 73 )
 OptionButton/styles/pressed = SubResource( 76 )
 Panel/styles/panel = SubResource( 6 )
+PopupMenu/constants/hseparation = 0
+PopupMenu/constants/vseparation = 0
+PopupMenu/fonts/font = SubResource( 71 )
+PopupMenu/styles/hover = SubResource( 73 )
+PopupMenu/styles/panel = SubResource( 77 )
 
 [sub_resource type="StyleBoxFlat" id=18]
 bg_color = Color( 0.827451, 0.721569, 1, 0.117647 )
@@ -291,12 +317,6 @@ use_filter = true
 font_data = ExtResource( 10 )
 
 [sub_resource type="StyleBoxEmpty" id=66]
-
-[sub_resource type="DynamicFont" id=71]
-size = 50
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxEmpty" id=62]
 
@@ -817,13 +837,13 @@ margin_right = 660.0
 margin_bottom = 200.0
 custom_constants/separation = 20
 
-[node name="Bmi" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
+[node name="Temperature" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
 margin_right = 206.0
 margin_bottom = 200.0
 rect_min_size = Vector2( 100, 200 )
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 67 )
-text = "BMI"
+text = "Temp"
 
 [node name="Area" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
 margin_left = 226.0
@@ -876,7 +896,7 @@ custom_fonts/font = SubResource( 67 )
 custom_styles/disabled = SubResource( 66 )
 disabled = true
 
-[node name="BmiBack" type="Panel" parent="ConverterUI"]
+[node name="TempBack" type="Panel" parent="ConverterUI"]
 anchor_right = 1.0
 anchor_bottom = 0.977
 margin_left = 30.0
@@ -886,7 +906,7 @@ margin_bottom = -0.560059
 custom_styles/panel = SubResource( 19 )
 script = ExtResource( 13 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/BmiBack"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/TempBack"]
 anchor_top = 0.025
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -896,28 +916,27 @@ margin_right = -12.0
 margin_bottom = -755.0
 custom_constants/separation = 60
 
-[node name="Value1" type="HBoxContainer" parent="ConverterUI/BmiBack/VBoxContainer"]
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/TempBack/VBoxContainer"]
 margin_right = 636.0
-margin_bottom = 83.0
+margin_bottom = 78.0
 
-[node name="OptionButton" type="OptionButton" parent="ConverterUI/BmiBack/VBoxContainer/Value1"]
-margin_right = 132.0
-margin_bottom = 83.0
-size_flags_horizontal = 3
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/TempBack/VBoxContainer/Value1"]
+margin_right = 76.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 71 )
 align = 1
 
-[node name="Num" type="Label" parent="ConverterUI/BmiBack/VBoxContainer/Value1"]
-margin_left = 136.0
+[node name="Num" type="Label" parent="ConverterUI/TempBack/VBoxContainer/Value1"]
+margin_left = 80.0
 margin_top = 7.0
 margin_right = 636.0
-margin_bottom = 76.0
-rect_min_size = Vector2( 500, 0 )
+margin_bottom = 71.0
+size_flags_horizontal = 3
 custom_fonts/font = SubResource( 71 )
 align = 2
 clip_text = true
 
-[node name="ButtonV1" type="Button" parent="ConverterUI/BmiBack/VBoxContainer/Value1/Num"]
+[node name="ButtonV1" type="Button" parent="ConverterUI/TempBack/VBoxContainer/Value1/Num"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/hover = SubResource( 62 )
@@ -925,29 +944,28 @@ custom_styles/pressed = SubResource( 62 )
 custom_styles/disabled = SubResource( 62 )
 custom_styles/normal = SubResource( 62 )
 
-[node name="Value2" type="HBoxContainer" parent="ConverterUI/BmiBack/VBoxContainer"]
-margin_top = 143.0
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/TempBack/VBoxContainer"]
+margin_top = 138.0
 margin_right = 636.0
-margin_bottom = 226.0
+margin_bottom = 216.0
 
-[node name="OptionButton" type="OptionButton" parent="ConverterUI/BmiBack/VBoxContainer/Value2"]
-margin_right = 132.0
-margin_bottom = 83.0
-size_flags_horizontal = 3
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/TempBack/VBoxContainer/Value2"]
+margin_right = 76.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 71 )
 align = 1
 
-[node name="Num" type="Label" parent="ConverterUI/BmiBack/VBoxContainer/Value2"]
-margin_left = 136.0
+[node name="Num" type="Label" parent="ConverterUI/TempBack/VBoxContainer/Value2"]
+margin_left = 80.0
 margin_top = 7.0
 margin_right = 636.0
-margin_bottom = 76.0
-rect_min_size = Vector2( 500, 0 )
+margin_bottom = 71.0
+size_flags_horizontal = 3
 custom_fonts/font = SubResource( 71 )
 align = 2
 clip_text = true
 
-[node name="ButtonV2" type="Button" parent="ConverterUI/BmiBack/VBoxContainer/Value2/Num"]
+[node name="ButtonV2" type="Button" parent="ConverterUI/TempBack/VBoxContainer/Value2/Num"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/hover = SubResource( 62 )
@@ -964,6 +982,74 @@ margin_top = 85.0
 margin_right = -30.0
 margin_bottom = -0.560059
 custom_styles/panel = SubResource( 19 )
+script = ExtResource( 15 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/AreaBack"]
+anchor_top = 0.025
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -0.125
+margin_right = -12.0
+margin_bottom = -755.0
+custom_constants/separation = 60
+
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/AreaBack/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 78.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/AreaBack/VBoxContainer/Value1"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/AreaBack/VBoxContainer/Value1"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV1" type="Button" parent="ConverterUI/AreaBack/VBoxContainer/Value1/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/AreaBack/VBoxContainer"]
+margin_top = 138.0
+margin_right = 636.0
+margin_bottom = 216.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/AreaBack/VBoxContainer/Value2"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/AreaBack/VBoxContainer/Value2"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV2" type="Button" parent="ConverterUI/AreaBack/VBoxContainer/Value2/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
 
 [node name="LengthBack" type="Panel" parent="ConverterUI"]
 visible = false
@@ -974,6 +1060,74 @@ margin_top = 85.0
 margin_right = -30.0
 margin_bottom = -0.560059
 custom_styles/panel = SubResource( 19 )
+script = ExtResource( 16 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/LengthBack"]
+anchor_top = 0.025
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -0.125
+margin_right = -12.0
+margin_bottom = -755.0
+custom_constants/separation = 60
+
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/LengthBack/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 78.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/LengthBack/VBoxContainer/Value1"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/LengthBack/VBoxContainer/Value1"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV1" type="Button" parent="ConverterUI/LengthBack/VBoxContainer/Value1/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/LengthBack/VBoxContainer"]
+margin_top = 138.0
+margin_right = 636.0
+margin_bottom = 216.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/LengthBack/VBoxContainer/Value2"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/LengthBack/VBoxContainer/Value2"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV2" type="Button" parent="ConverterUI/LengthBack/VBoxContainer/Value2/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
 
 [node name="MassBack" type="Panel" parent="ConverterUI"]
 visible = false
@@ -984,6 +1138,74 @@ margin_top = 85.0
 margin_right = -30.0
 margin_bottom = -0.560059
 custom_styles/panel = SubResource( 19 )
+script = ExtResource( 18 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/MassBack"]
+anchor_top = 0.025
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -0.125
+margin_right = -12.0
+margin_bottom = -755.0
+custom_constants/separation = 60
+
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/MassBack/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 78.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/MassBack/VBoxContainer/Value1"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/MassBack/VBoxContainer/Value1"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV1" type="Button" parent="ConverterUI/MassBack/VBoxContainer/Value1/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/MassBack/VBoxContainer"]
+margin_top = 138.0
+margin_right = 636.0
+margin_bottom = 216.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/MassBack/VBoxContainer/Value2"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/MassBack/VBoxContainer/Value2"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV2" type="Button" parent="ConverterUI/MassBack/VBoxContainer/Value2/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
 
 [node name="SpeedBack" type="Panel" parent="ConverterUI"]
 visible = false
@@ -994,6 +1216,74 @@ margin_top = 85.0
 margin_right = -30.0
 margin_bottom = -0.560059
 custom_styles/panel = SubResource( 19 )
+script = ExtResource( 17 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/SpeedBack"]
+anchor_top = 0.025
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -0.125
+margin_right = -12.0
+margin_bottom = -755.0
+custom_constants/separation = 60
+
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/SpeedBack/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 78.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/SpeedBack/VBoxContainer/Value1"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/SpeedBack/VBoxContainer/Value1"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV1" type="Button" parent="ConverterUI/SpeedBack/VBoxContainer/Value1/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/SpeedBack/VBoxContainer"]
+margin_top = 138.0
+margin_right = 636.0
+margin_bottom = 216.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/SpeedBack/VBoxContainer/Value2"]
+margin_right = 76.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/SpeedBack/VBoxContainer/Value2"]
+margin_left = 80.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV2" type="Button" parent="ConverterUI/SpeedBack/VBoxContainer/Value2/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
 
 [node name="InputWindow" type="Control" parent="ConverterUI"]
 anchor_right = 1.0
@@ -1554,13 +1844,19 @@ is_calculator_mode = false
 [connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/0" to="." method="_on_0_pressed"]
 [connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/Dot" to="." method="_on_Dot_pressed"]
 [connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/Calculate" to="." method="_on_Calculate_pressed"]
-[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Bmi" to="ConverterUI" method="_on_Bmi_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Temperature" to="ConverterUI" method="_on_temperature_pressed"]
 [connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Area" to="ConverterUI" method="_on_Area_pressed"]
 [connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Length" to="ConverterUI" method="_on_Length_pressed"]
 [connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox2/Mass" to="ConverterUI" method="_on_Mass_pressed"]
 [connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox2/Speed" to="ConverterUI" method="_on_Speed_pressed"]
-[connection signal="pressed" from="ConverterUI/BmiBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/BmiBack" method="_on_ButtonV1_pressed"]
-[connection signal="pressed" from="ConverterUI/BmiBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/BmiBack" method="_on_ButtonV2_pressed"]
+[connection signal="pressed" from="ConverterUI/AreaBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/TempBack" method="_on_ButtonV1_pressed"]
+[connection signal="pressed" from="ConverterUI/AreaBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/TempBack" method="_on_ButtonV2_pressed"]
+[connection signal="pressed" from="ConverterUI/LengthBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/TempBack" method="_on_ButtonV1_pressed"]
+[connection signal="pressed" from="ConverterUI/LengthBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/TempBack" method="_on_ButtonV2_pressed"]
+[connection signal="pressed" from="ConverterUI/MassBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/TempBack" method="_on_ButtonV1_pressed"]
+[connection signal="pressed" from="ConverterUI/MassBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/TempBack" method="_on_ButtonV2_pressed"]
+[connection signal="pressed" from="ConverterUI/SpeedBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/TempBack" method="_on_ButtonV1_pressed"]
+[connection signal="pressed" from="ConverterUI/SpeedBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/TempBack" method="_on_ButtonV2_pressed"]
 [connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/7" to="ConverterUI/InputWindow" method="_on_7_pressed"]
 [connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/4" to="ConverterUI/InputWindow" method="_on_4_pressed"]
 [connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/1" to="ConverterUI/InputWindow" method="_on_1_pressed"]

@@ -3,7 +3,7 @@ extends Control
 
 onready var converter_state_ui := {
 	back = $Back, 
-	bmi_back = $BmiBack, 
+	temp_back = $TempBack, 
 	area_back = $AreaBack,
 	length_back = $LengthBack,
 	mass_back = $MassBack,
@@ -16,7 +16,7 @@ onready var back_button = $BackButton
 
 enum ConverterState {
 	Default, 
-	BmiConv, 
+	TempConv, 
 	AreaConv, 
 	LengthConv, 
 	MassConv, 
@@ -32,8 +32,8 @@ func set_state(value):
 		input_window.visible = true
 		back_button.visible = true
 		match value:
-			ConverterState.BmiConv:
-				set_visible_to_nodes(converter_state_ui["bmi_back"], true)
+			ConverterState.TempConv:
+				set_visible_to_nodes(converter_state_ui["temp_back"], true)
 			ConverterState.AreaConv:
 				set_visible_to_nodes(converter_state_ui["area_back"], true)
 			ConverterState.LengthConv:
@@ -51,22 +51,25 @@ func set_state(value):
 
 func set_visible_to_nodes(node: Panel, node_visible: bool):
 	node.visible = node_visible
+	node.set_mouse_filter(MOUSE_FILTER_STOP)
 	
 	if node is BaseConverter:
+		node.set_state(BaseConverter.State.Value1)
 		node._on_InputWindow_btn_pressed("/fullerase")
 	
 	for key in converter_state_ui.keys():
 		var element = converter_state_ui[key]
 		if element != node:
 			element.visible = !node_visible
+			element.set_mouse_filter(MOUSE_FILTER_IGNORE)
 
 
 func _ready():
 	set_state(ConverterState.Default)
 
 
-func _on_Bmi_pressed():
-	set_state(ConverterState.BmiConv)
+func _on_temperature_pressed():
+	set_state(ConverterState.TempConv)
 
 
 func _on_Area_pressed():
@@ -93,3 +96,6 @@ func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		if !Global.can_quit:
 			set_state(ConverterState.Default)
+
+
+
