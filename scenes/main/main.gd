@@ -1,19 +1,19 @@
 extends Control
 
+
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
 const actions_with_bracket = ["+", "-", "*", "/", "(", ")"]
 const actions = ["+", "-", "*", "/"]
 
 var cur_expressions: String = ""
 
-onready var past_calculation := $VBoxContainer/OutputWindow/Back/VBoxContainer/PastCalculation
-onready var cur_calculation := $VBoxContainer/OutputWindow/Back/VBoxContainer/CurrentCalculation
+onready var past_calculation := $CalculatorUI/OutputWindow/Back/VBoxContainer/PastCalculation
+onready var cur_calculation := $CalculatorUI/OutputWindow/Back/VBoxContainer/CurrentCalculation
+
+onready var option_conteiner = $OptionConteiner
 
 func _ready():
 	cur_calculation.text = cur_expressions
-	
-	for child in get_children():
-		pass
 
 
 func set_cur_expression(local_expression: String):
@@ -144,100 +144,139 @@ func _on_Calculate_pressed():
 
 
 func _on_FullErase_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression("")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Dot_pressed():
+	if !Global.is_calculator_mode:
+		return
+	
 	set_cur_expression(cur_expressions + ".")
 	clear_equals_in_cur_calculation()
 
 
 func _on_0_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "0")
 	clear_equals_in_cur_calculation()
 
 
 func _on_1_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "1")
 	clear_equals_in_cur_calculation()
 
 
 func _on_2_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "2")
 	clear_equals_in_cur_calculation()
 
 
 func _on_3_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "3")
 	clear_equals_in_cur_calculation()
 
 
 func _on_4_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "4")
 	clear_equals_in_cur_calculation()
 
 
 func _on_5_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "5")
 	clear_equals_in_cur_calculation()
 
 
 func _on_6_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "6")
 	clear_equals_in_cur_calculation()
 
 
 func _on_7_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "7")
 	clear_equals_in_cur_calculation()
 
 
 func _on_8_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "8")
 	clear_equals_in_cur_calculation()
 
 
 func _on_9_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "9")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Erase_pressed():
+	if !Global.is_calculator_mode:
+		return
 	cur_expressions.erase(cur_expressions.length() - 1, 1)
 	set_cur_expression(cur_expressions)
 	clear_equals_in_cur_calculation()
 
 
 func _on_OpenBracket_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + "(")
 	clear_equals_in_cur_calculation()
 
 
 func _on_CloseBracket_pressed():
+	if !Global.is_calculator_mode:
+		return
 	set_cur_expression(cur_expressions + ")")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Divide_pressed():
+	if !Global.is_calculator_mode:
+		return
 	check_action_char()
 	set_cur_expression(cur_expressions + "/")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Subtract_pressed():
+	if !Global.is_calculator_mode:
+		return
 	check_action_char()
 	set_cur_expression(cur_expressions + "-")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Multiply_pressed():
+	if !Global.is_calculator_mode:
+		return
 	check_action_char()
 	set_cur_expression(cur_expressions + "*")
 	clear_equals_in_cur_calculation()
 
 
 func _on_Add_pressed():
+	if !Global.is_calculator_mode:
+		return
 	check_action_char()
 	set_cur_expression(cur_expressions + "+")
 	clear_equals_in_cur_calculation()

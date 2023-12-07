@@ -1,9 +1,19 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=86 format=2]
 
 [ext_resource path="res://scenes/main/CurrentCalculation.gd" type="Script" id=1]
 [ext_resource path="res://global/fonts/nunito/static/Nunito-Medium.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://global/icons/icons8-backspace-96.png" type="Texture" id=3]
 [ext_resource path="res://scenes/main/main.gd" type="Script" id=4]
+[ext_resource path="res://global/icons/icons8-calculator-96.png" type="Texture" id=5]
+[ext_resource path="res://global/icons/icons8-rich-text-converter-96.png" type="Texture" id=6]
+[ext_resource path="res://icon_buttongroup.tres" type="ButtonGroup" id=7]
+[ext_resource path="res://scenes/main/ButtonIcon.gd" type="Script" id=8]
+[ext_resource path="res://scenes/main/option_conteiner.gd" type="Script" id=9]
+[ext_resource path="res://global/fonts/nunito/static/Nunito-SemiBold.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://scenes/converter/converter_ui.gd" type="Script" id=11]
+[ext_resource path="res://global/icons/icons8-down-arrow-48.png" type="Texture" id=12]
+[ext_resource path="res://scenes/converter/BmiBack.gd" type="Script" id=13]
+[ext_resource path="res://scenes/main/InputWindow.gd" type="Script" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.878431, 0.372549, 0.372549, 0.290196 )
@@ -49,6 +59,41 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
+[sub_resource type="StyleBoxEmpty" id=74]
+
+[sub_resource type="StyleBoxFlat" id=75]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.7376, 0.656, 0.8, 0.180392 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=73]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.552941, 0.490196, 0.6, 0.180392 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=76]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.3227, 0.287, 0.35, 0.180392 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.827451, 0.721569, 1, 0.117647 )
 corner_radius_top_left = 50
@@ -71,6 +116,12 @@ LineEdit/colors/font_color_uneditable = Color( 0.878431, 0.878431, 0.878431, 1 )
 LineEdit/styles/focus = SubResource( 9 )
 LineEdit/styles/normal = SubResource( 10 )
 LineEdit/styles/read_only = SubResource( 15 )
+OptionButton/constants/arrow_margin = 2
+OptionButton/icons/arrow = ExtResource( 12 )
+OptionButton/styles/focus = SubResource( 74 )
+OptionButton/styles/hover = SubResource( 75 )
+OptionButton/styles/normal = SubResource( 73 )
+OptionButton/styles/pressed = SubResource( 76 )
 Panel/styles/panel = SubResource( 6 )
 
 [sub_resource type="StyleBoxFlat" id=18]
@@ -88,8 +139,6 @@ bg_color = Color( 0.827451, 0.721569, 1, 0.117647 )
 border_width_top = 346
 border_color = Color( 0.827451, 0.721569, 1, 0 )
 border_blend = true
-corner_radius_top_left = 50
-corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
@@ -235,6 +284,38 @@ action = "enter"
 [sub_resource type="ShortCut" id=60]
 shortcut = SubResource( 59 )
 
+[sub_resource type="DynamicFont" id=67]
+size = 54
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 10 )
+
+[sub_resource type="StyleBoxEmpty" id=66]
+
+[sub_resource type="DynamicFont" id=71]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=62]
+
+[sub_resource type="StyleBoxEmpty" id=68]
+
+[sub_resource type="DynamicFont" id=69]
+size = 60
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=70]
+
+[sub_resource type="StyleBoxEmpty" id=63]
+
+[sub_resource type="StyleBoxEmpty" id=64]
+
+[sub_resource type="StyleBoxEmpty" id=65]
+
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -250,29 +331,30 @@ margin_right = -15.0
 margin_bottom = -15.0
 custom_styles/panel = SubResource( 18 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CalculatorUI" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="OutputWindow" type="Control" parent="VBoxContainer"]
+[node name="OutputWindow" type="Control" parent="CalculatorUI"]
 margin_right = 720.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 500 )
 
-[node name="Back" type="Panel" parent="VBoxContainer/OutputWindow"]
+[node name="Back" type="Panel" parent="CalculatorUI/OutputWindow"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 30.0
-margin_top = 30.0
+margin_top = 85.0
 margin_right = -30.0
 margin_bottom = -15.0
 custom_styles/panel = SubResource( 19 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/OutputWindow/Back"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CalculatorUI/OutputWindow/Back"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="PastCalculation" type="Label" parent="VBoxContainer/OutputWindow/Back/VBoxContainer"]
+[node name="PastCalculation" type="Label" parent="CalculatorUI/OutputWindow/Back/VBoxContainer"]
 margin_right = 660.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
@@ -282,10 +364,10 @@ align = 2
 valign = 1
 clip_text = true
 
-[node name="CurrentCalculation" type="Label" parent="VBoxContainer/OutputWindow/Back/VBoxContainer"]
+[node name="CurrentCalculation" type="Label" parent="CalculatorUI/OutputWindow/Back/VBoxContainer"]
 margin_top = 104.0
 margin_right = 660.0
-margin_bottom = 455.0
+margin_bottom = 400.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 14 )
 custom_styles/normal = SubResource( 16 )
@@ -294,7 +376,7 @@ valign = 2
 autowrap = true
 script = ExtResource( 1 )
 
-[node name="InputWindow" type="Control" parent="VBoxContainer"]
+[node name="InputWindow" type="Control" parent="CalculatorUI"]
 margin_top = 504.0
 margin_right = 720.0
 margin_bottom = 1280.0
@@ -302,7 +384,7 @@ rect_min_size = Vector2( 0, 300 )
 rect_pivot_offset = Vector2( -1165, -185 )
 size_flags_vertical = 3
 
-[node name="Back" type="Panel" parent="VBoxContainer/InputWindow"]
+[node name="Back" type="Panel" parent="CalculatorUI/InputWindow"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 30.0
@@ -311,18 +393,18 @@ margin_right = -30.0
 margin_bottom = -30.0
 custom_styles/panel = SubResource( 19 )
 
-[node name="VBox" type="VBoxContainer" parent="VBoxContainer/InputWindow/Back"]
+[node name="VBox" type="VBoxContainer" parent="CalculatorUI/InputWindow/Back"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 15
 
-[node name="HBox" type="HBoxContainer" parent="VBoxContainer/InputWindow/Back/VBox"]
+[node name="HBox" type="HBoxContainer" parent="CalculatorUI/InputWindow/Back/VBox"]
 margin_right = 660.0
 margin_bottom = 134.0
 size_flags_vertical = 3
 custom_constants/separation = 31
 
-[node name="Erase" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox"]
+[node name="Erase" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox"]
 margin_right = 141.0
 margin_bottom = 134.0
 size_flags_horizontal = 3
@@ -330,7 +412,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 21 )
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/InputWindow/Back/VBox/HBox/Erase"]
+[node name="TextureRect" type="TextureRect" parent="CalculatorUI/InputWindow/Back/VBox/HBox/Erase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -342,8 +424,11 @@ margin_bottom = 43.0
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="OpenBracket" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox"]
+[node name="OpenBracket" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox"]
 margin_left = 172.0
 margin_right = 314.0
 margin_bottom = 134.0
@@ -352,7 +437,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 24 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox/OpenBracket"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox/OpenBracket"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -6.0
@@ -361,8 +446,11 @@ custom_fonts/font = SubResource( 17 )
 text = "("
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="CloseBracket" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox"]
+[node name="CloseBracket" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox"]
 margin_left = 345.0
 margin_right = 487.0
 margin_bottom = 134.0
@@ -371,7 +459,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 26 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox/CloseBracket"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox/CloseBracket"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
@@ -380,8 +468,11 @@ custom_fonts/font = SubResource( 17 )
 text = ")"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="Divide" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox"]
+[node name="Divide" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox"]
 margin_left = 518.0
 margin_right = 660.0
 margin_bottom = 134.0
@@ -390,7 +481,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 28 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox/Divide"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox/Divide"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -2.0
@@ -398,15 +489,18 @@ custom_fonts/font = SubResource( 17 )
 text = "÷"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="HBox2" type="HBoxContainer" parent="VBoxContainer/InputWindow/Back/VBox"]
+[node name="HBox2" type="HBoxContainer" parent="CalculatorUI/InputWindow/Back/VBox"]
 margin_top = 149.0
 margin_right = 660.0
 margin_bottom = 283.0
 size_flags_vertical = 3
 custom_constants/separation = 31
 
-[node name="7" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox2"]
+[node name="7" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox2"]
 margin_right = 141.0
 margin_bottom = 134.0
 size_flags_horizontal = 3
@@ -414,7 +508,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 30 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox2/7"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox2/7"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -422,7 +516,7 @@ text = "7"
 align = 1
 valign = 1
 
-[node name="8" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox2"]
+[node name="8" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox2"]
 margin_left = 172.0
 margin_right = 314.0
 margin_bottom = 134.0
@@ -431,7 +525,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 32 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox2/8"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox2/8"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -439,7 +533,7 @@ text = "8"
 align = 1
 valign = 1
 
-[node name="9" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox2"]
+[node name="9" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox2"]
 margin_left = 345.0
 margin_right = 487.0
 margin_bottom = 134.0
@@ -448,7 +542,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 34 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox2/9"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox2/9"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -456,7 +550,7 @@ text = "9"
 align = 1
 valign = 1
 
-[node name="Multiply" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox2"]
+[node name="Multiply" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox2"]
 margin_left = 518.0
 margin_right = 660.0
 margin_bottom = 134.0
@@ -465,7 +559,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 36 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox2/Multiply"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox2/Multiply"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -9.0
@@ -474,14 +568,14 @@ text = "x"
 align = 1
 valign = 1
 
-[node name="HBox3" type="HBoxContainer" parent="VBoxContainer/InputWindow/Back/VBox"]
+[node name="HBox3" type="HBoxContainer" parent="CalculatorUI/InputWindow/Back/VBox"]
 margin_top = 298.0
 margin_right = 660.0
 margin_bottom = 432.0
 size_flags_vertical = 3
 custom_constants/separation = 31
 
-[node name="4" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox3"]
+[node name="4" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox3"]
 margin_right = 141.0
 margin_bottom = 134.0
 size_flags_horizontal = 3
@@ -489,7 +583,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 38 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox3/4"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox3/4"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -497,7 +591,7 @@ text = "4"
 align = 1
 valign = 1
 
-[node name="5" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox3"]
+[node name="5" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox3"]
 margin_left = 172.0
 margin_right = 314.0
 margin_bottom = 134.0
@@ -506,7 +600,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 40 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox3/5"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox3/5"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -514,7 +608,7 @@ text = "5"
 align = 1
 valign = 1
 
-[node name="6" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox3"]
+[node name="6" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox3"]
 margin_left = 345.0
 margin_right = 487.0
 margin_bottom = 134.0
@@ -523,7 +617,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 42 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox3/6"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox3/6"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -531,7 +625,7 @@ text = "6"
 align = 1
 valign = 1
 
-[node name="Subtract" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox3"]
+[node name="Subtract" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox3"]
 margin_left = 518.0
 margin_right = 660.0
 margin_bottom = 134.0
@@ -540,7 +634,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 44 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox3/Subtract"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox3/Subtract"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -548,14 +642,14 @@ text = "-"
 align = 1
 valign = 1
 
-[node name="HBox4" type="HBoxContainer" parent="VBoxContainer/InputWindow/Back/VBox"]
+[node name="HBox4" type="HBoxContainer" parent="CalculatorUI/InputWindow/Back/VBox"]
 margin_top = 447.0
 margin_right = 660.0
 margin_bottom = 581.0
 size_flags_vertical = 3
 custom_constants/separation = 31
 
-[node name="1" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox4"]
+[node name="1" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox4"]
 margin_right = 141.0
 margin_bottom = 134.0
 size_flags_horizontal = 3
@@ -563,7 +657,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 46 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox4/1"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox4/1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -571,7 +665,7 @@ text = "1"
 align = 1
 valign = 1
 
-[node name="2" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox4"]
+[node name="2" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox4"]
 margin_left = 172.0
 margin_right = 314.0
 margin_bottom = 134.0
@@ -580,7 +674,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 48 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox4/2"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox4/2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -588,7 +682,7 @@ text = "2"
 align = 1
 valign = 1
 
-[node name="3" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox4"]
+[node name="3" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox4"]
 margin_left = 345.0
 margin_right = 487.0
 margin_bottom = 134.0
@@ -597,7 +691,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 50 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox4/3"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox4/3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -605,7 +699,7 @@ text = "3"
 align = 1
 valign = 1
 
-[node name="Add" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox4"]
+[node name="Add" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox4"]
 margin_left = 518.0
 margin_right = 660.0
 margin_bottom = 134.0
@@ -614,7 +708,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 52 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox4/Add"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox4/Add"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -622,14 +716,14 @@ text = "+"
 align = 1
 valign = 1
 
-[node name="HBox5" type="HBoxContainer" parent="VBoxContainer/InputWindow/Back/VBox"]
+[node name="HBox5" type="HBoxContainer" parent="CalculatorUI/InputWindow/Back/VBox"]
 margin_top = 596.0
 margin_right = 660.0
 margin_bottom = 731.0
 size_flags_vertical = 3
 custom_constants/separation = 31
 
-[node name="FullErase" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox5"]
+[node name="FullErase" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox5"]
 margin_right = 141.0
 margin_bottom = 135.0
 size_flags_horizontal = 3
@@ -637,7 +731,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 54 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox5/FullErase"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox5/FullErase"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -645,7 +739,7 @@ text = "C"
 align = 1
 valign = 1
 
-[node name="0" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox5"]
+[node name="0" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox5"]
 margin_left = 172.0
 margin_right = 314.0
 margin_bottom = 135.0
@@ -654,7 +748,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 56 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox5/0"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox5/0"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -662,7 +756,7 @@ text = "0"
 align = 1
 valign = 1
 
-[node name="Dot" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox5"]
+[node name="Dot" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox5"]
 margin_left = 345.0
 margin_right = 487.0
 margin_bottom = 135.0
@@ -671,7 +765,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 58 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox5/Dot"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox5/Dot"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 17 )
@@ -679,7 +773,7 @@ text = "."
 align = 1
 valign = 1
 
-[node name="Calculate" type="Button" parent="VBoxContainer/InputWindow/Back/VBox/HBox5"]
+[node name="Calculate" type="Button" parent="CalculatorUI/InputWindow/Back/VBox/HBox5"]
 margin_left = 518.0
 margin_right = 660.0
 margin_bottom = 135.0
@@ -688,7 +782,7 @@ custom_fonts/font = SubResource( 17 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 60 )
 
-[node name="Label" type="Label" parent="VBoxContainer/InputWindow/Back/VBox/HBox5/Calculate"]
+[node name="Label" type="Label" parent="CalculatorUI/InputWindow/Back/VBox/HBox5/Calculate"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 1, 0.854902, 0.811765, 1 )
@@ -697,23 +791,788 @@ text = "="
 align = 1
 valign = 1
 
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox/Erase" to="." method="_on_Erase_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox/OpenBracket" to="." method="_on_OpenBracket_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox/CloseBracket" to="." method="_on_CloseBracket_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox/Divide" to="." method="_on_Divide_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox2/7" to="." method="_on_7_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox2/8" to="." method="_on_8_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox2/9" to="." method="_on_9_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox2/Multiply" to="." method="_on_Multiply_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox3/4" to="." method="_on_4_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox3/5" to="." method="_on_5_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox3/6" to="." method="_on_6_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox3/Subtract" to="." method="_on_Subtract_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox4/1" to="." method="_on_1_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox4/2" to="." method="_on_2_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox4/3" to="." method="_on_3_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox4/Add" to="." method="_on_Add_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox5/FullErase" to="." method="_on_FullErase_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox5/0" to="." method="_on_0_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox5/Dot" to="." method="_on_Dot_pressed"]
-[connection signal="pressed" from="VBoxContainer/InputWindow/Back/VBox/HBox5/Calculate" to="." method="_on_Calculate_pressed"]
+[node name="ConverterUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -597, 668 )
+script = ExtResource( 11 )
+
+[node name="Back" type="Panel" parent="ConverterUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+
+[node name="ConverterButtonsContainer" type="VBoxContainer" parent="ConverterUI/Back"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 20
+
+[node name="HBox1" type="HBoxContainer" parent="ConverterUI/Back/ConverterButtonsContainer"]
+margin_right = 660.0
+margin_bottom = 200.0
+custom_constants/separation = 20
+
+[node name="Bmi" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
+margin_right = 206.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 100, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+text = "BMI"
+
+[node name="Area" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
+margin_left = 226.0
+margin_right = 433.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 100, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+text = "Area"
+
+[node name="Length" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox1"]
+margin_left = 453.0
+margin_right = 660.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 100, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+text = "Lenght"
+
+[node name="HBox2" type="HBoxContainer" parent="ConverterUI/Back/ConverterButtonsContainer"]
+margin_top = 220.0
+margin_right = 660.0
+margin_bottom = 420.0
+custom_constants/separation = 20
+
+[node name="Mass" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox2"]
+margin_right = 206.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 140, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+text = "Mass"
+
+[node name="Speed" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox2"]
+margin_left = 226.0
+margin_right = 433.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 140, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+text = "Speed"
+
+[node name="Button2" type="Button" parent="ConverterUI/Back/ConverterButtonsContainer/HBox2"]
+margin_left = 453.0
+margin_right = 660.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 140, 200 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 67 )
+custom_styles/disabled = SubResource( 66 )
+disabled = true
+
+[node name="BmiBack" type="Panel" parent="ConverterUI"]
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+script = ExtResource( 13 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConverterUI/BmiBack"]
+anchor_top = 0.025
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -0.125
+margin_right = -12.0
+margin_bottom = -755.0
+custom_constants/separation = 60
+
+[node name="Value1" type="HBoxContainer" parent="ConverterUI/BmiBack/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 83.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/BmiBack/VBoxContainer/Value1"]
+margin_right = 132.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/BmiBack/VBoxContainer/Value1"]
+margin_left = 136.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 500, 0 )
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV1" type="Button" parent="ConverterUI/BmiBack/VBoxContainer/Value1/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="Value2" type="HBoxContainer" parent="ConverterUI/BmiBack/VBoxContainer"]
+margin_top = 143.0
+margin_right = 636.0
+margin_bottom = 226.0
+
+[node name="OptionButton" type="OptionButton" parent="ConverterUI/BmiBack/VBoxContainer/Value2"]
+margin_right = 132.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 71 )
+align = 1
+
+[node name="Num" type="Label" parent="ConverterUI/BmiBack/VBoxContainer/Value2"]
+margin_left = 136.0
+margin_top = 7.0
+margin_right = 636.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 500, 0 )
+custom_fonts/font = SubResource( 71 )
+align = 2
+clip_text = true
+
+[node name="ButtonV2" type="Button" parent="ConverterUI/BmiBack/VBoxContainer/Value2/Num"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 62 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 62 )
+
+[node name="AreaBack" type="Panel" parent="ConverterUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+
+[node name="LengthBack" type="Panel" parent="ConverterUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+
+[node name="MassBack" type="Panel" parent="ConverterUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+
+[node name="SpeedBack" type="Panel" parent="ConverterUI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 0.977
+margin_left = 30.0
+margin_top = 85.0
+margin_right = -30.0
+margin_bottom = -0.560059
+custom_styles/panel = SubResource( 19 )
+
+[node name="InputWindow" type="Control" parent="ConverterUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 504.0
+rect_min_size = Vector2( 0, 300 )
+rect_pivot_offset = Vector2( -1165, -185 )
+size_flags_vertical = 3
+script = ExtResource( 14 )
+
+[node name="Back" type="Panel" parent="ConverterUI/InputWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 30.0
+margin_top = 15.0
+margin_right = -30.0
+margin_bottom = -30.0
+custom_styles/panel = SubResource( 19 )
+
+[node name="HBox" type="HBoxContainer" parent="ConverterUI/InputWindow/Back"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 10
+
+[node name="VBox" type="VBoxContainer" parent="ConverterUI/InputWindow/Back/HBox"]
+margin_right = 157.0
+margin_bottom = 731.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="7" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox"]
+margin_right = 157.0
+margin_bottom = 167.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 30 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox/7"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "7"
+align = 1
+valign = 1
+
+[node name="4" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox"]
+margin_top = 187.0
+margin_right = 157.0
+margin_bottom = 355.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 38 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox/4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "4"
+align = 1
+valign = 1
+
+[node name="1" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox"]
+margin_top = 375.0
+margin_right = 157.0
+margin_bottom = 543.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 46 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox/1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "1"
+align = 1
+valign = 1
+
+[node name="2" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox"]
+margin_top = 563.0
+margin_right = 157.0
+margin_bottom = 731.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+custom_styles/disabled = SubResource( 68 )
+disabled = true
+shortcut_in_tooltip = false
+shortcut = SubResource( 46 )
+
+[node name="VBox2" type="VBoxContainer" parent="ConverterUI/InputWindow/Back/HBox"]
+margin_left = 167.0
+margin_right = 325.0
+margin_bottom = 731.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="8" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox2"]
+margin_right = 158.0
+margin_bottom = 167.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 32 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox2/8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "8"
+align = 1
+valign = 1
+
+[node name="5" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox2"]
+margin_top = 187.0
+margin_right = 158.0
+margin_bottom = 355.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 40 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox2/5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "5"
+align = 1
+valign = 1
+
+[node name="2" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox2"]
+margin_top = 375.0
+margin_right = 158.0
+margin_bottom = 543.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 48 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox2/2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "2"
+align = 1
+valign = 1
+
+[node name="0" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox2"]
+margin_top = 563.0
+margin_right = 158.0
+margin_bottom = 731.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 56 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox2/0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "0"
+align = 1
+valign = 1
+
+[node name="VBox3" type="VBoxContainer" parent="ConverterUI/InputWindow/Back/HBox"]
+margin_left = 335.0
+margin_right = 492.0
+margin_bottom = 731.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="9" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox3"]
+margin_right = 157.0
+margin_bottom = 167.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 34 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox3/9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "9"
+align = 1
+valign = 1
+
+[node name="6" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox3"]
+margin_top = 187.0
+margin_right = 157.0
+margin_bottom = 355.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 42 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox3/6"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "6"
+align = 1
+valign = 1
+
+[node name="3" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox3"]
+margin_top = 375.0
+margin_right = 157.0
+margin_bottom = 543.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 50 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox3/3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "3"
+align = 1
+valign = 1
+
+[node name="Dot" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox3"]
+margin_top = 563.0
+margin_right = 157.0
+margin_bottom = 731.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 58 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox3/Dot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "."
+align = 1
+valign = 1
+
+[node name="VBox4" type="VBoxContainer" parent="ConverterUI/InputWindow/Back/HBox"]
+margin_left = 502.0
+margin_right = 660.0
+margin_bottom = 731.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+
+[node name="FullErase" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox4"]
+margin_right = 158.0
+margin_bottom = 355.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 54 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/HBox/VBox4/FullErase"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "C"
+align = 1
+valign = 1
+
+[node name="Erase" type="Button" parent="ConverterUI/InputWindow/Back/HBox/VBox4"]
+margin_top = 375.0
+margin_right = 158.0
+margin_bottom = 731.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 21 )
+
+[node name="TextureRect" type="TextureRect" parent="ConverterUI/InputWindow/Back/HBox/VBox4/Erase"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.5
+margin_top = -43.0
+margin_right = 44.5
+margin_bottom = 43.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBox" type="VBoxContainer" parent="ConverterUI/InputWindow/Back"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 15
+
+[node name="HBox" type="HBoxContainer" parent="ConverterUI/InputWindow/Back/VBox"]
+margin_right = 660.0
+margin_bottom = 134.0
+size_flags_vertical = 3
+custom_constants/separation = 31
+
+[node name="OpenBracket" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox"]
+margin_left = 172.0
+margin_right = 314.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 24 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox/OpenBracket"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -6.0
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 17 )
+text = "("
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="CloseBracket" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox"]
+margin_left = 345.0
+margin_right = 487.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 26 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox/CloseBracket"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 17 )
+text = ")"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Divide" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox"]
+margin_left = 518.0
+margin_right = 660.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 28 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox/Divide"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -2.0
+custom_fonts/font = SubResource( 17 )
+text = "÷"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBox2" type="HBoxContainer" parent="ConverterUI/InputWindow/Back/VBox"]
+margin_top = 149.0
+margin_right = 660.0
+margin_bottom = 283.0
+size_flags_vertical = 3
+custom_constants/separation = 31
+
+[node name="Multiply" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox2"]
+margin_left = 460.0
+margin_right = 660.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 36 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox2/Multiply"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -9.0
+custom_fonts/font = SubResource( 17 )
+text = "x"
+align = 1
+valign = 1
+
+[node name="HBox3" type="HBoxContainer" parent="ConverterUI/InputWindow/Back/VBox"]
+margin_top = 298.0
+margin_right = 660.0
+margin_bottom = 432.0
+size_flags_vertical = 3
+custom_constants/separation = 31
+
+[node name="Subtract" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox3"]
+margin_left = 518.0
+margin_right = 660.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 44 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox3/Subtract"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "-"
+align = 1
+valign = 1
+
+[node name="HBox4" type="HBoxContainer" parent="ConverterUI/InputWindow/Back/VBox"]
+margin_top = 447.0
+margin_right = 660.0
+margin_bottom = 581.0
+size_flags_vertical = 3
+custom_constants/separation = 31
+
+[node name="Add" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox4"]
+margin_left = 518.0
+margin_right = 660.0
+margin_bottom = 134.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 52 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox4/Add"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 17 )
+text = "+"
+align = 1
+valign = 1
+
+[node name="HBox5" type="HBoxContainer" parent="ConverterUI/InputWindow/Back/VBox"]
+margin_top = 596.0
+margin_right = 660.0
+margin_bottom = 731.0
+size_flags_vertical = 3
+custom_constants/separation = 31
+
+[node name="Calculate" type="Button" parent="ConverterUI/InputWindow/Back/VBox/HBox5"]
+margin_left = 518.0
+margin_right = 660.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 17 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 60 )
+
+[node name="Label" type="Label" parent="ConverterUI/InputWindow/Back/VBox/HBox5/Calculate"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 0.854902, 0.811765, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "="
+align = 1
+valign = 1
+
+[node name="BackButton" type="Button" parent="ConverterUI"]
+margin_left = 30.0
+margin_right = 141.0
+margin_bottom = 84.0
+custom_colors/font_color_pressed = Color( 0.529412, 0.529412, 0.529412, 1 )
+custom_fonts/font = SubResource( 69 )
+custom_styles/hover = SubResource( 70 )
+custom_styles/pressed = SubResource( 70 )
+custom_styles/focus = SubResource( 70 )
+custom_styles/disabled = SubResource( 70 )
+custom_styles/normal = SubResource( 70 )
+text = "<"
+
+[node name="OptionConteiner" type="HBoxContainer" parent="."]
+anchor_right = 0.999
+margin_right = -0.280029
+margin_bottom = 82.0
+mouse_filter = 2
+custom_constants/separation = 91
+alignment = 1
+script = ExtResource( 9 )
+
+[node name="ControlCaculator" type="Control" parent="OptionConteiner"]
+margin_left = 194.0
+margin_right = 314.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 120, 0 )
+mouse_filter = 1
+
+[node name="CalculatorMode" type="Button" parent="OptionConteiner/ControlCaculator"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -34.0
+margin_bottom = 34.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 63 )
+custom_styles/disabled = SubResource( 64 )
+custom_styles/normal = SubResource( 65 )
+toggle_mode = true
+group = ExtResource( 7 )
+icon = ExtResource( 5 )
+icon_align = 1
+expand_icon = true
+script = ExtResource( 8 )
+
+[node name="ControlConverter" type="Control" parent="OptionConteiner"]
+margin_left = 405.0
+margin_right = 525.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 120, 0 )
+mouse_filter = 1
+
+[node name="ConverterMode" type="Button" parent="OptionConteiner/ControlConverter"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -34.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 120, 0 )
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 62 )
+custom_styles/pressed = SubResource( 63 )
+custom_styles/disabled = SubResource( 64 )
+custom_styles/normal = SubResource( 65 )
+toggle_mode = true
+group = ExtResource( 7 )
+icon = ExtResource( 6 )
+icon_align = 1
+expand_icon = true
+script = ExtResource( 8 )
+is_calculator_mode = false
+
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox/Erase" to="." method="_on_Erase_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox/OpenBracket" to="." method="_on_OpenBracket_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox/CloseBracket" to="." method="_on_CloseBracket_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox/Divide" to="." method="_on_Divide_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox2/7" to="." method="_on_7_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox2/8" to="." method="_on_8_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox2/9" to="." method="_on_9_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox2/Multiply" to="." method="_on_Multiply_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox3/4" to="." method="_on_4_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox3/5" to="." method="_on_5_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox3/6" to="." method="_on_6_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox3/Subtract" to="." method="_on_Subtract_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox4/1" to="." method="_on_1_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox4/2" to="." method="_on_2_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox4/3" to="." method="_on_3_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox4/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/FullErase" to="." method="_on_FullErase_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/0" to="." method="_on_0_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/Dot" to="." method="_on_Dot_pressed"]
+[connection signal="pressed" from="CalculatorUI/InputWindow/Back/VBox/HBox5/Calculate" to="." method="_on_Calculate_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Bmi" to="ConverterUI" method="_on_Bmi_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Area" to="ConverterUI" method="_on_Area_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox1/Length" to="ConverterUI" method="_on_Length_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox2/Mass" to="ConverterUI" method="_on_Mass_pressed"]
+[connection signal="pressed" from="ConverterUI/Back/ConverterButtonsContainer/HBox2/Speed" to="ConverterUI" method="_on_Speed_pressed"]
+[connection signal="pressed" from="ConverterUI/BmiBack/VBoxContainer/Value1/Num/ButtonV1" to="ConverterUI/BmiBack" method="_on_ButtonV1_pressed"]
+[connection signal="pressed" from="ConverterUI/BmiBack/VBoxContainer/Value2/Num/ButtonV2" to="ConverterUI/BmiBack" method="_on_ButtonV2_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/7" to="ConverterUI/InputWindow" method="_on_7_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/4" to="ConverterUI/InputWindow" method="_on_4_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/1" to="ConverterUI/InputWindow" method="_on_1_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox/2" to="ConverterUI/InputWindow" method="_on_2_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox2/8" to="ConverterUI/InputWindow" method="_on_8_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox2/5" to="ConverterUI/InputWindow" method="_on_5_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox2/2" to="ConverterUI/InputWindow" method="_on_2_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox2/0" to="ConverterUI/InputWindow" method="_on_0_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox3/9" to="ConverterUI/InputWindow" method="_on_9_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox3/6" to="ConverterUI/InputWindow" method="_on_6_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox3/3" to="ConverterUI/InputWindow" method="_on_3_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox3/Dot" to="ConverterUI/InputWindow" method="_on_Dot_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox4/FullErase" to="ConverterUI/InputWindow" method="_on_FullErase_pressed"]
+[connection signal="pressed" from="ConverterUI/InputWindow/Back/HBox/VBox4/Erase" to="ConverterUI/InputWindow" method="_on_Erase_pressed"]
+[connection signal="pressed" from="ConverterUI/BackButton" to="ConverterUI" method="_on_BackButton_pressed"]

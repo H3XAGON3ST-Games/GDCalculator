@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Panel",
+"class": "BaseConverter",
+"language": "GDScript",
+"path": "res://scenes/converter/BaseConverter.gd"
+} ]
+_global_script_class_icons={
+"BaseConverter": ""
+}
+
 [application]
 
 config/name="GDCalculator"
@@ -17,6 +27,11 @@ boot_splash/show_image=false
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.176471, 1 )
 config/icon="res://logocalculator.png"
 config/windows_native_icon="res://logocalculator.ico"
+config/quit_on_go_back=false
+
+[autoload]
+
+Global="*res://global/singleton/global.gd"
 
 [display]
 
